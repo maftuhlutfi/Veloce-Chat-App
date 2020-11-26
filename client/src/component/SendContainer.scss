@@ -1,0 +1,18 @@
+.send-container {
+    height: 50px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    
+    .text-field {
+        flex-grow: 4;
+    }
+
+    button {
+        flex-grow: .2;
+        margin-left: 10px;
+    }
+}
