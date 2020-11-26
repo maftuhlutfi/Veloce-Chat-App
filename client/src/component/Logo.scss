@@ -1,0 +1,19 @@
+.logo-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+
+	.logo {
+		width: 40px;
+		margin-right: 10px;
+	}
+
+	div {
+		font-size: 68%;
+
+		h3 {
+			margin: 0;
+		}
+	}
+}
