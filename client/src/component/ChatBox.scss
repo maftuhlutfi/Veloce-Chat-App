@@ -1,0 +1,31 @@
+.chat-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    max-width: fit-content;
+    font-size: .8em;
+    background-color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 6px 0 rgba(0,0,0,0.15);
+    -moz-box-shadow: 0px 0px 6px 0 rgba(0,0,0,0.15);
+    box-shadow: 0px 0px 6px 0 rgba(0,0,0,0.15);
+    margin-top: 10px;
+    margin-inline: 0 15%;
+
+    .sender {
+        font-weight: bold;
+        margin-bottom: 6px;
+    }
+
+    .message {
+        margin-bottom: 6px;
+    }
+
+    .timestamp {
+        font-size: 90%;
+        text-align: right;
+        opacity: .8;
+    }
+}

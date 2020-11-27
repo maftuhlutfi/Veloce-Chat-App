@@ -1,3 +1,27 @@
 .chat-container {
     flex-grow: 1;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    padding-top: 0;
+}
+
+.chat-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+.chat-container::-webkit-scrollbar-thumb {
+    background: #D5DDED;
+    border-radius: 15px;
+}
+.chat-container::-webkit-scrollbar-thumb:hover{
+    background: #28ACEB;
+}
+.chat-container::-webkit-scrollbar-track{
+    background: #ffffff;
+    border-radius: 0px;
+    box-shadow: inset 7px 10px 12px #f0f0f0;
 }

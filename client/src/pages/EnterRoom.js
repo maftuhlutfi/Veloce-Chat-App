@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './EnterRoom.scss';
 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import TextField from '../component/TextField';
 import Button from '../component/Button';
@@ -10,6 +10,7 @@ import { CgEnter } from 'react-icons/cg';
 function EnterRoom(props) {
 	const [input, setInput] = useState({username: '', roomCode: ''});
 	const { username, roomCode } = input;
+	const history = useHistory();
 
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -19,6 +20,11 @@ function EnterRoom(props) {
 			[name]: value
 		}))
 	}
+
+	const handleClick = e => {
+		e.preventDefault();
+		history.push('/chatroom');
+	}
 	return (
 		<div className="login-wrapper">
 			<form className='login-form' autocomplete='off'>
@@ -27,7 +33,7 @@ function EnterRoom(props) {
 				<TextField handleChange={handleChange} value={username} type='text' name='username' placeholder='Username' required />
 				<div className='button-group'>
 					<TextField handleChange={handleChange} value={roomCode} type='text' name='roomCode' placeholder='Room Code' required />
-					<Button style={{color:'white', backgroundColor:'#28ACEB', width: '20%', padding: '0'}} icon={<CgEnter size='1.3em' />} />
+					<Button onClick={handleClick} style={{color:'white', backgroundColor:'#28ACEB', width: '20%', padding: '0'}} icon={<CgEnter size='1.3em' />} />
 				</div>
 			</form>
 		</div>

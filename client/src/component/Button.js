@@ -1,8 +1,8 @@
 import './Button.scss';
 
-function Button({label, style, icon}) {
+function Button({label, icon, ...otherProps}) {
 	return (
-		<button className='button' style={style}>
+		<button className='button' {...otherProps}>
 			{label && label}
 			{icon && icon}
 		</button>
