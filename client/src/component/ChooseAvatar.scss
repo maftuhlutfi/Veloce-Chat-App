@@ -1,0 +1,15 @@
+.choose-avatar {
+    position: relative;
+    z-index: 11;
+    .avatar-list {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-gap: 10px;
+
+        img:hover {
+            filter: brightness(110%);
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+    }
+}

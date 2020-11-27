@@ -1,13 +1,13 @@
 import './UserBox.scss';
 
-function UserBox(props) {
+import AvatarBox from './AvatarBox'
+
+function UserBox({src, username}) {
     return (
         <div className='user-box'>
-            <div className='avatar-box'>
-                <img src="https://robohash.org/K57.png?set=set1&size=150x150" alt="profile-pict"/>
-            </div>
+            <AvatarBox width='50px' inline src={src} />
             <div className="detail">
-                <span className="username">{props.username}</span>
+                <span className="username">{username}</span>
                 <span className="status">Online</span>
             </div>
         </div>

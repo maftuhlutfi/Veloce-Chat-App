@@ -15,6 +15,27 @@
 		-webkit-box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.15);
 		-moz-box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.15);
 		box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.15);
+		position: relative;
+
+		img {
+			margin-bottom: 5px;
+		}
+
+		.edit-icon {
+			position: absolute;
+			text-align: center;
+			top: 85px;
+			right: 100px;
+			background-color: #2CBDFF;
+			border-radius: 50%;
+			color: white;
+			padding: 2px;
+
+			&:hover {
+				cursor: pointer;
+				filter: brightness(110%);
+			}
+		}
 
 		.login-title {
 			font-weight: bold;
