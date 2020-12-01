@@ -50,7 +50,14 @@
 				color: #28ACEB;
 				text-decoration: none;
 			}
-		}
+        }
+        
+        .error-msg {
+            color: rgb(255, 47, 47);
+            margin: -10px 0 10px 0;
+            font-size: .8em;
+            display: block;
+        }
 
 		.text-field:not(:last-child) {
 			margin-bottom: 10px !important;

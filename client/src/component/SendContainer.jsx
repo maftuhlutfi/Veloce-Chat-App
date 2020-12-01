@@ -1,11 +1,12 @@
 import './SendContainer.scss'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import TextField from '../component/TextField'
 import Button from '../component/Button'
 
 import { MdSend } from 'react-icons/md';
+import { io } from 'socket.io-client';
 
 function SendContainer(props) {
     const [inputMsg, setInputMsg] = useState('');
@@ -14,10 +15,23 @@ function SendContainer(props) {
 		const {value} = e.target;
 		setInputMsg(value);
     }
+
+    let socket = null;
+
+    useEffect(() => {
+        socket = io('http://localhost:4000');
+    })
+
+    const handleClick = e => {
+        e.preventDefault();
+
+        socket.emit('chat message', inputMsg);
+        setInputMsg('');
+    }
     
     return (
         <div className="send-container">
-            <TextField handleChange={handleChange} value={inputMsg} required />
+            <TextField onChange={handleChange} value={inputMsg} required />
             <Button
                 style={{
                     backgroundColor: '#28ACEB',
@@ -26,7 +40,9 @@ function SendContainer(props) {
                     color: 'white',
                     fontSize: '1.2em'
                 }}
-                icon={<MdSend />} />
+                icon={<MdSend />} 
+                onClick={handleClick}
+            />
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './TextField.scss';
 
-function TextField({label, handleChange, value, underlined, ...otherProps}) {
+function TextField({label, value, underlined, ...otherProps}) {
 	const [isFocus, setIsFocus] = useState(false);
 
 	const underlinedStyle = {
@@ -20,8 +20,8 @@ function TextField({label, handleChange, value, underlined, ...otherProps}) {
 				onFocus={() => setIsFocus(true)}
 				onBlur={() => setIsFocus(false)} 
 				className={`input ${isFocus || value ? 'focus' : ''}`}
-				onChange={handleChange}
 				style={underlined ? underlinedStyle : {}}
+				value={value}
 				{...otherProps} 
 			/>
 		</div>
