@@ -58,7 +58,7 @@ app.post('/join', (req, res) => {
     }
 })
 
-app.get('getchat/:roomCode', (req, res) => {
+app.get('/getchat/:roomCode', (req, res) => {
     const {roomCode} = req.params;
 
     if(chatLog[roomCode]) {
@@ -68,7 +68,7 @@ app.get('getchat/:roomCode', (req, res) => {
     }
 })
 
-app.get('getusers/:roomCode', (req, res) => {
+app.get('/getusers/:roomCode', (req, res) => {
     const {roomCode} = req.params;
 
     if(room[roomCode]) {
@@ -99,7 +99,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on('join room', roomCode => {
-        socket.broadcast.emit('get users');
+        console.log(roomCode);
+        socket.join(roomCode);
+        socket.to(roomCode).emit('update users');
     })
 
     socket.on('leave room', roomCode => {

@@ -6,18 +6,15 @@ import ChatRoom from './pages/ChatRoom';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { socketConnectStart } from "./redux/actions";
+import { socketConnect } from "./redux/actions";
 import { useEffect } from 'react';
 
 function App() {
 	const dispatch = useDispatch();
 	const room = useSelector(state => state.room);
-	const socket = useSelector(state => state.socket);
 
 	useEffect(() => {
-		if (!socket) {
-			dispatch(socketConnectStart('http://localhost:4000'))
-		}
+		dispatch(socketConnect())
 	}, [dispatch])
 
 	return (

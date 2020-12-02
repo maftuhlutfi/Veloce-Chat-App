@@ -1,7 +1,6 @@
 import * as types from '../types';
 
 const INITIAL_STATE = {
-    socket: null,
     room: null,
     chatLog: null,
     user: null,
@@ -11,10 +10,13 @@ const INITIAL_STATE = {
 
 const chatReducers = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case types.SOCKET_CONNECT_SUCCESS:
+        case types.SOCKET_CONNECT_START:
+        case types.SUBSCRIBE_START:
+            return state;
+        case types.SUBSCRIBE_SUCCESS:
             return ({
                 ...state,
-                socket: action.payload
+                errMsg: ''
             })
         case types.CREATE_ROOM_START:
         case types.JOIN_ROOM_START:
@@ -32,9 +34,19 @@ const chatReducers = (state = INITIAL_STATE, action) => {
                 user: action.payload.user,
                 errMsg: ''
             })
+        case types.UPDATE_USERS_SUCCESS:
+            return ({
+                ...state,
+                room: {
+                    ...state.room,
+                    users: action.payload
+                }
+            })
         case types.CREATE_ROOM_FAILURE:
         case types.JOIN_ROOM_FAILURE:
         case types.SOCKET_CONNECT_FAILURE:
+        case types.SUBSCRIBE_FAILURE:
+        case types.UPDATE_USERS_FAILURE:
             return ({
                 ...state,
                 isLoading: false,
