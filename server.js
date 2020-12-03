@@ -40,8 +40,6 @@ app.post('/create', (req, res) => {
 
 app.post('/join', (req, res) => {
     const {roomCode, user} = req.body;
-    console.log(req.body);
-    console.log(room[roomCode]);
 
     if(room[roomCode]) {
         room[roomCode].users.push(user);
@@ -95,11 +93,10 @@ io.on('connection', (socket) => {
             chatLog[roomCode].push(msg)
         }
 
-        socket.broadcast.emit('get messages');
+        io.in(roomCode).emit('update messages');
     })
 
     socket.on('join room', roomCode => {
-        console.log(roomCode);
         socket.join(roomCode);
         socket.to(roomCode).emit('update users');
     })

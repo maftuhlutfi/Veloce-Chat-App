@@ -48,6 +48,20 @@ const updateUsersApi = roomCode => {
     })
 }
 
+const updateChatLogApi = roomCode => {
+    return axios({
+        method: 'GET',
+        withCredentials: true,
+        url: `${BASE_API}/getchat/${roomCode}`
+    })
+    .then(res => {
+        return res.data
+    })
+    .catch(err => {
+        throw err.response.data
+    })
+}
+
 export function socketConnect() {
     return {
         type: 'socket',
@@ -61,8 +75,7 @@ export const createRoomStart = roomData => async dispatch => {
     try {
         const data = await createRoomApi(roomData);
         dispatch(createRoomSuccess(data));
-        dispatch(emitJoinRoom(data.room.roomCode));
-        dispatch(onJoinRoom(dispatch, data.room.roomCode))
+        dispatch(subscribe(data.room.roomCode));
     }
     catch (err) {
         dispatch(createRoomFailure(err));
@@ -84,8 +97,7 @@ export const joinRoomStart = roomAndUser => async dispatch => {
     try {
         const data = await joinRoomApi(roomAndUser);
         dispatch(joinRoomSuccess(data));
-        dispatch(emitJoinRoom(data.room.roomCode));
-        dispatch(onJoinRoom(dispatch, data.room.roomCode))
+        dispatch(subscribe(data.room.roomCode));
     } catch(err) {
         dispatch(joinRoomFailure(err))
     }
@@ -121,6 +133,38 @@ export const updateUsersFailure = err => ({
     payload: err
 })
 
+export const updateChatLogStart = roomCode => async dispatch => {
+    dispatch({type: types.UPDATE_CHATLOG_START})
+    try {
+        const messages = await updateChatLogApi(roomCode);
+        dispatch(updateChatLogSuccess(messages));
+    } catch (err) {
+        dispatch(updateChatLogFailure(err))
+    }
+}
+
+export const updateChatLogSuccess = chatLog => ({
+    type: types.UPDATE_CHATLOG_SUCCESS,
+    payload: chatLog
+})
+
+export const updateChatLogFailure = err => ({
+    type: types.UPDATE_CHATLOG_FAILURE,
+    payload: err
+})
+
+export const sendMessage = msg => ({
+    type: 'socket',
+    types: [types.SEND_MESSAGE_START, types.SEND_MESSAGE_SUCCESS, types.SEND_MESSAGE_FAILURE],
+    promise: socket => socket.emit('send message', msg)
+})
+
+export const subscribe = roomCode => dispatch => {
+    dispatch(emitJoinRoom(roomCode));
+    dispatch(onJoinRoom(dispatch, roomCode));
+    dispatch(onMessageUpdate(dispatch, roomCode));
+}
+
 export const emitJoinRoom = roomCode => ({
     type: 'socket',
     types: ['EMIT_JOIN_ROOM', 'EMIT_JOIN_ROOM_SUCCESS', 'EMIT_JOIN_ROOM_FAILURE'],
@@ -131,4 +175,10 @@ export const onJoinRoom = (dispatch, roomCode) => ({
     type: 'socket',
     types: ['ON_JOIN_ROOM', 'ON_JOIN_ROOM_SUCCESS', 'ON_JOIN_ROOM_FAILURE'],
     promise: socket => socket.on('update users', () => dispatch(updateUsersStart(roomCode)))
+})
+
+export const onMessageUpdate = (dispatch, roomCode) => ({
+    type: 'socket',
+    types: ['ON_MESSAGE_UPDATE', 'ON_MESSAGE_UPDATE_SUCCESS', 'ON_MESSAGE_UPDATE_FAILURE'],
+    promise: socket => socket.on('update messages', () => dispatch(updateChatLogStart(roomCode)))
 })

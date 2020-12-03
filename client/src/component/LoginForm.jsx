@@ -37,7 +37,10 @@ function EnterRoom({create}) {
 	const [showModal, setShowModal] = useState(false);
 
 	const handleChange = e => {
-        const { name, value } = e.target;
+        let { name, value } = e.target;
+        if (name === 'roomCode') {
+            value = value.toUpperCase();
+        }
         setErrMsg('');
 
 		setInput(prev => ({

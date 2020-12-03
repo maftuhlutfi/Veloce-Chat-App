@@ -42,11 +42,17 @@ const chatReducers = (state = INITIAL_STATE, action) => {
                     users: action.payload
                 }
             })
+        case types.UPDATE_CHATLOG_SUCCESS:
+            return ({
+                ...state,
+                chatLog: action.payload
+            })
         case types.CREATE_ROOM_FAILURE:
         case types.JOIN_ROOM_FAILURE:
         case types.SOCKET_CONNECT_FAILURE:
         case types.SUBSCRIBE_FAILURE:
         case types.UPDATE_USERS_FAILURE:
+        case types.UPDATE_CHATLOG_FAILURE:
             return ({
                 ...state,
                 isLoading: false,

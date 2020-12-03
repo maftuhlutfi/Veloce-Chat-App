@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 function ChatContainer(props) {
     const bottomRef = useRef();
     const chatLog = useSelector(state => state.chatLog);
-    const currentUser = useSelector(state => state.currentUser);
+    const currentUser = useSelector(state => state.user);
 
     const scrollToBottom = () => {
         bottomRef.current.scrollIntoView({
@@ -27,7 +27,7 @@ function ChatContainer(props) {
                     sender={sender === currentUser.username ? false : sender} 
                     color='dodgerblue' 
                     message={message}
-                    time={timestamp} 
+                    time={timestamp.time} 
                     key={index}
                 />)
             }

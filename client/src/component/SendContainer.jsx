@@ -1,14 +1,19 @@
 import './SendContainer.scss'
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import TextField from '../component/TextField'
 import Button from '../component/Button'
 
 import { MdSend } from 'react-icons/md';
-import { io } from 'socket.io-client';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendMessage } from '../redux/actions';
 
 function SendContainer(props) {
+    const dispatch = useDispatch();
+    const sender = useSelector(state => state.user.username)
+    const roomCode = useSelector(state => state.room.roomCode)
+
     const [inputMsg, setInputMsg] = useState('');
 
 	const handleChange = e => {
@@ -16,16 +21,16 @@ function SendContainer(props) {
 		setInputMsg(value);
     }
 
-    let socket = null;
-
-    useEffect(() => {
-        socket = io('http://localhost:4000');
-    })
-
     const handleClick = e => {
         e.preventDefault();
-
-        socket.emit('chat message', inputMsg);
+        const date = new Date();
+        const [day, month, year, hours, minutes] = [date.getDay(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes()];
+        dispatch(sendMessage({
+            sender, 
+            message: inputMsg, 
+            timestamp: {date:`${day}/${month}/${year}`, time: `${hours/10 < 1 ? '0' + hours : hours}:${minutes/10 < 1 ? '0' + minutes : minutes}`},
+            roomCode
+        }));
         setInputMsg('');
     }
     
