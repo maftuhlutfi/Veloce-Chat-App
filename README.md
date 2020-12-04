@@ -5,7 +5,7 @@ Simple chat app with node.js, express, and react with realtime feature using soc
 ## Short description
 *Veloce* in English means "quick", so the idea of this application is how we communicate via chat quickly without logging in, registering, adding friends, and so on.
 ## App demo
-![app demo](https://i.ibb.co/B4TKph4/Join-file-222837059.gif)
+<img src="https://i.ibb.co/B4TKph4/Join-file-222837059.gif" alt="Join-file-222837059" border="0">
 ## Further development
 
  - Emoji tab.
