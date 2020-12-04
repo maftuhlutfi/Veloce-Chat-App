@@ -5,4 +5,16 @@ header.main-layout-header {
     align-items: center;
     justify-content: space-between;
     padding: 10px 15px;
+
+    .three-dot {
+        position: relative;
+        .info {
+            position: absolute;
+            right: 0;
+            width: max-content;
+            -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+		    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+        }
+    }
 }
