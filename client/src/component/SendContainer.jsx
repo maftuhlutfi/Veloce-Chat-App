@@ -1,13 +1,13 @@
 import './SendContainer.scss'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import TextField from '../component/TextField'
 import Button from '../component/Button'
 
 import { MdSend } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
-import { sendMessage } from '../redux/actions';
+import { emitTypingStart, emitTypingStop, sendMessage } from '../redux/actions';
 
 function SendContainer(props) {
     const dispatch = useDispatch();
@@ -21,8 +21,11 @@ function SendContainer(props) {
 		setInputMsg(value);
     }
 
-    const handleClick = e => {
+    const handleSend = e => {
         e.preventDefault();
+        if (!inputMsg) {
+            return;
+        }
         const date = new Date();
         const [day, month, year, hours, minutes] = [date.getDay(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes()];
         dispatch(sendMessage({
@@ -31,12 +34,30 @@ function SendContainer(props) {
             timestamp: {date:`${day}/${month}/${year}`, time: `${hours/10 < 1 ? '0' + hours : hours}:${minutes/10 < 1 ? '0' + minutes : minutes}`},
             roomCode
         }));
+        dispatch(emitTypingStop(roomCode, sender));
         setInputMsg('');
     }
+
+    useEffect(() => {
+        var timeStop;
+        document.querySelector('input.input').addEventListener('keyup', e => {
+            if (e.key === 'Enter') {
+                return;
+            }
+            window.clearTimeout(timeStop);
+            console.log('type');
+            dispatch(emitTypingStart(roomCode, {...sender, status: 'Is typing...'}))
+            timeStop = setTimeout(() => {
+                dispatch(emitTypingStop(roomCode, sender))
+            }, 4000)
+        })
+
+        //return () => document.querySelector('input.input').removeEventListener('keyup', () => {console.log('remove typing listener.')})
+    }, [dispatch, roomCode, sender])
     
     return (
         <form className="send-container">
-            <TextField onChange={handleChange} value={inputMsg} required />
+            <TextField onKeyDown={e => e.key === 'Enter' ? handleSend : ''} id='type' onChange={handleChange} value={inputMsg} required />
             <Button
                 style={{
                     backgroundColor: '#28ACEB',
@@ -46,7 +67,7 @@ function SendContainer(props) {
                     fontSize: '1.2em'
                 }}
                 icon={<MdSend />} 
-                onClick={handleClick}
+                onClick={handleSend}
             />
         </form>
     );

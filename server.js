@@ -109,11 +109,29 @@ io.on('connection', (socket) => {
     })
 
     socket.on('leave room', ({roomCode, username}) => {
+        if (!room[roomCode]) {
+            return;
+        }
         const users = room[roomCode].users;
         room[roomCode].users = users.filter(user => user.username !== username);
-        console.log(socket.rooms);
+        console.log(username, socket.rooms);
         socket.rooms.delete(roomCode);
+        console.log(username, socket.rooms);
         socket.to(roomCode).emit('update users');
+    })
+
+    socket.on('typing start', ({roomCode, user:{username, status}}) => {
+        const users = room[roomCode].users;
+        room[roomCode].users = users.map(user => user.username === username ? {...user, status} : user);
+        socket.to(roomCode).emit('update users');
+        console.log(room[roomCode])
+    })
+
+    socket.on('typing stop', ({roomCode, user:{username, status}}) => {
+        const users = room[roomCode].users;
+        room[roomCode].users = users.map(user => user.username === username ? {...user, status} : user);
+        socket.to(roomCode).emit('update users');
+        console.log(room[roomCode])
     })
 });
 

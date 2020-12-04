@@ -22,6 +22,7 @@ function TextField({label, value, underlined, ...otherProps}) {
 				className={`input ${isFocus || value ? 'focus' : ''}`}
 				style={underlined ? underlinedStyle : {}}
 				value={value}
+				autoComplete='off'
 				{...otherProps} 
 			/>
 		</div>

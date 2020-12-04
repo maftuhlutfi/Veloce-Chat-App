@@ -63,12 +63,12 @@ function EnterRoom({create}) {
 
         if(create) {
             dispatch(createRoomStart({
-                user: {username, avatar: randomNumber, color},
+                user: {username, avatar: randomNumber, color, status: 'Online'},
                 roomTitle
             }))
         } else {
             dispatch(joinRoomStart({
-                user: {username, avatar: randomNumber, color},
+                user: {username, avatar: randomNumber, color, status: 'Online'},
                 roomCode
             }))
         }

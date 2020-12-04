@@ -184,6 +184,8 @@ export const subscribe = roomCode => dispatch => {
     dispatch(emitJoinRoom(roomCode));
     dispatch(onJoinRoom(dispatch, roomCode));
     dispatch(onMessageUpdate(dispatch, roomCode));
+    dispatch(onTypingStart(dispatch, roomCode));
+    dispatch(onTypingStop(dispatch, roomCode));
 }
 
 export const emitJoinRoom = roomCode => ({
@@ -202,4 +204,28 @@ export const onMessageUpdate = (dispatch, roomCode) => ({
     type: 'socket',
     types: ['ON_MESSAGE_UPDATE', 'ON_MESSAGE_UPDATE_SUCCESS', 'ON_MESSAGE_UPDATE_FAILURE'],
     promise: socket => socket.on('update messages', () => dispatch(updateChatLogStart(roomCode)))
+})
+
+export const onTypingStart = (dispatch, roomCode) => ({
+    type: 'socket',
+    types: ['ON_TYPING_START', 'ON_TYPING_SUCCESS', 'ON_TYPING_FAILURE'],
+    promise: socket => socket.on('typing start', () => dispatch(updateUsersStart(roomCode)))
+})
+
+export const onTypingStop = (dispatch, roomCode) => ({
+    type: 'socket',
+    types: ['ON_TYPING_STOP', 'ON_TYPING_STOP_SUCCESS', 'ON_TYPING_STOP_FAILURE'],
+    promise: socket => socket.on('typing stop', () => dispatch(updateUsersStart(roomCode)))
+})
+
+export const emitTypingStart = (roomCode, user) => ({
+    type: 'socket',
+    types: ['EMIT_TYPING_START', 'EMIT_TYPING_SUCCESS', 'EMIT_TYPING_FAILURE'],
+    promise: socket => socket.emit('typing start', {roomCode, user})
+})
+
+export const emitTypingStop = (roomCode, user) => ({
+    type: 'socket',
+    types: ['EMIT_TYPING_STOP', 'EMIT_TYPING_STOP_SUCCESS', 'EMIT_TYPING_STOP_FAILURE'],
+    promise: socket => socket.emit('typing stop', {roomCode, user})
 })

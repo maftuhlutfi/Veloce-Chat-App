@@ -8,6 +8,7 @@ header.main-layout-header {
 
     .three-dot {
         position: relative;
+        cursor: pointer;
         .info {
             position: absolute;
             right: 0;
@@ -15,6 +16,7 @@ header.main-layout-header {
             -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
 		    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
             box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+            z-index: 10;
         }
     }
 }

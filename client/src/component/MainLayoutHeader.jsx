@@ -15,7 +15,8 @@ function MainLayoutHeader(props) {
     const [show, setShow] = useState(false);
     
     const handleClick = () => {
-        dispatch(leaveRoomStart({roomCode, username}))
+        window.location.href = window.location.origin;
+        dispatch(leaveRoomStart({roomCode, username}));
     }
     
     return (
