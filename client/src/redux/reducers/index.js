@@ -20,6 +20,7 @@ const chatReducers = (state = INITIAL_STATE, action) => {
             })
         case types.CREATE_ROOM_START:
         case types.JOIN_ROOM_START:
+        case types.LEAVE_ROOM_START:
             return ({
                 ...state,
                 isLoading: true
@@ -47,12 +48,22 @@ const chatReducers = (state = INITIAL_STATE, action) => {
                 ...state,
                 chatLog: action.payload
             })
+        case types.LEAVE_ROOM_SUCCESS:
+            return ({
+                ...state,
+                room: null,
+                chatLog: null,
+                user: null,
+                isLoading: false,
+                errMsg: ''
+            })
         case types.CREATE_ROOM_FAILURE:
         case types.JOIN_ROOM_FAILURE:
         case types.SOCKET_CONNECT_FAILURE:
         case types.SUBSCRIBE_FAILURE:
         case types.UPDATE_USERS_FAILURE:
         case types.UPDATE_CHATLOG_FAILURE:
+        case types.LEAVE_ROOM_FAILURE:
             return ({
                 ...state,
                 isLoading: false,

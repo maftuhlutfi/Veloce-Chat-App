@@ -42,6 +42,12 @@ app.post('/join', (req, res) => {
     const {roomCode, user} = req.body;
 
     if(room[roomCode]) {
+        for (let i = 0; i < room[roomCode].users.length; i++) {
+            if (user.username === room[roomCode].users[i].username) {
+                res.status(401).send("The username is already exist.");
+                return;
+            }
+        }
         room[roomCode].users.push(user);
 
         const response = {
@@ -81,7 +87,8 @@ io.on('connection', (socket) => {
     usersConnected++;
     console.log(usersConnected + ' users connected');
 
-    socket.on('disconnect', () => {
+    socket.on('disconnect', (reason, any) => {
+        console.log(reason, any);
         socket.broadcast.emit('update users');
         usersConnected--;
         console.log(usersConnected + ' users connected.');
@@ -101,8 +108,12 @@ io.on('connection', (socket) => {
         socket.to(roomCode).emit('update users');
     })
 
-    socket.on('leave room', roomCode => {
-        socket.broadcast.emit('update users');
+    socket.on('leave room', ({roomCode, username}) => {
+        const users = room[roomCode].users;
+        room[roomCode].users = users.filter(user => user.username !== username);
+        console.log(socket.rooms);
+        socket.rooms.delete(roomCode);
+        socket.to(roomCode).emit('update users');
     })
 });
 

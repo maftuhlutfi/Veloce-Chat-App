@@ -23,9 +23,9 @@ function ChatContainer(props) {
     return (
         <div className="chat-container">
             {
-                chatLog.map(({sender, message, timestamp}, index) => <ChatBox 
-                    sender={sender === currentUser.username ? false : sender} 
-                    color='dodgerblue' 
+                chatLog.map(({sender: {username, color}, message, timestamp}, index) => <ChatBox 
+                    sender={username === currentUser.username ? false : username} 
+                    color={color} 
                     message={message}
                     time={timestamp.time} 
                     key={index}

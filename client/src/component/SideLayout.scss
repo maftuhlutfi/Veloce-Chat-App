@@ -10,6 +10,8 @@ aside.side-layout {
     position: relative;
 
     header {
+        position: relative;
+
         .title {
             font-weight: bolder;
             color: white;
@@ -21,6 +23,33 @@ aside.side-layout {
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .info {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 15px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .info-tab {
+            position: absolute;
+            top: 30%;
+            padding: 10px;
+            background-color: white;
+            border-radius: 10px;
+            left: 100%;
+            transform: translateX(3px);
+            -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+		    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+            font-size: 12px;
+            width: fit-content;
+            white-space: nowrap;
+            color: initial;
+            cursor: text;
         }
     }
 }

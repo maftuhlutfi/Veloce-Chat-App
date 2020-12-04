@@ -11,7 +11,7 @@ import { sendMessage } from '../redux/actions';
 
 function SendContainer(props) {
     const dispatch = useDispatch();
-    const sender = useSelector(state => state.user.username)
+    const sender = useSelector(state => state.user)
     const roomCode = useSelector(state => state.room.roomCode)
 
     const [inputMsg, setInputMsg] = useState('');
@@ -35,7 +35,7 @@ function SendContainer(props) {
     }
     
     return (
-        <div className="send-container">
+        <form className="send-container">
             <TextField onChange={handleChange} value={inputMsg} required />
             <Button
                 style={{
@@ -48,7 +48,7 @@ function SendContainer(props) {
                 icon={<MdSend />} 
                 onClick={handleClick}
             />
-        </div>
+        </form>
     );
 }
  

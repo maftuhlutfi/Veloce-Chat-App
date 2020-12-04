@@ -16,6 +16,7 @@ import ChooseAvatar from '../component/ChooseAvatar'
 
 import { createRoomStart, joinRoomStart } from "../redux/actions";
 import { useDispatch, useSelector } from 'react-redux';
+import random_rgba from '../utils/randomRGB';
 
 function EnterRoom({create}) {
     const dispatch = useDispatch();
@@ -58,14 +59,16 @@ function EnterRoom({create}) {
 	const handleClick = e => {
         e.preventDefault();
         
+        const color = random_rgba();
+
         if(create) {
             dispatch(createRoomStart({
-                user: {username, avatar: randomNumber},
+                user: {username, avatar: randomNumber, color},
                 roomTitle
             }))
         } else {
             dispatch(joinRoomStart({
-                user: {username, avatar: randomNumber},
+                user: {username, avatar: randomNumber, color},
                 roomCode
             }))
         }
@@ -80,7 +83,7 @@ function EnterRoom({create}) {
 				<AvatarBox width='70px' src={`https://robohash.org/${randomNumber}.png?set=set1&size=150x150`} />
 				<MdEdit className='edit-icon' onClick={() => setShowModal(true)} />
 				<span className='login-title'>{create ? 'Create' : 'Join'} a room</span>
-				<p className='login-sub'>Or join <Link to={create ? '/join' : '/create'}>here</Link></p>
+				<p className='login-sub'>Or {create ? 'join' : 'create'} <Link to={create ? '/join' : '/create'}>here</Link></p>
                 {errMsg ? <span className="error-msg">{errMsg}</span> : ''}
 				<TextField onChange={handleChange} value={username} type='text' name='username' placeholder='Username' required />
 				<div className='button-group'>

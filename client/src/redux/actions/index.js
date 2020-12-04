@@ -70,6 +70,27 @@ export function socketConnect() {
     };
 }
 
+export function socketDisconnect() {
+    return {
+        type: 'socket',
+        types: ['SOCKET_DISCONNECT_START', 'SOCKET_DISCONNECT_SUCCESS', 'SOCKET_DISCONNECT_FAILURE'],
+        promise: socket => socket.disconnect()
+    };
+}
+
+export function leaveRoom(detail) {
+    return {
+        type: 'socket',
+        types: [types.LEAVE_ROOM_START, types.LEAVE_ROOM_SUCCESS, types.LEAVE_ROOM_FAILURE],
+        promise: socket => socket.emit('leave room', detail)
+    };
+}
+
+export const leaveRoomStart = detail => dispatch => {
+    dispatch(leaveRoom(detail));
+    //dispatch(socketDisconnect());
+}
+
 export const createRoomStart = roomData => async dispatch => {
     dispatch({type: types.CREATE_ROOM_START});
     try {
